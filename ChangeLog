@@ -1,0 +1,13 @@
+bloonix-dbi (0.3) released at 2014-11-03
+
+    * sth_cache_enabled is turned off by default now.
+    * Updated the license information.
+
+bloonix-dbi (0.2) released at 2014-10-24
+
+    * Disable die_on_errors by default so that the logger
+      does not die on errors.
+
+bloonix-dbi (0.1) released at 2014-08-25
+
+    * Initial release.

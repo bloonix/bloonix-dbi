@@ -1,0 +1,20 @@
+bloonix-dbi (0.3-1) unstable; urgency=low
+
+    * sth_cache_enabled is turned off by default now.
+    * Updated the license information.
+
+ -- Jonny Schulz <js@bloonix.de>  Mon, 03 Nov 2014 21:08:57 +0100
+
+bloonix-dbi (0.2-1) unstable; urgency=low
+
+    * Disable die_on_errors by default so that the logger
+      does not die on errors.
+
+ -- Jonny Schulz <js@bloonix.de>  Fri, 24 Oct 2014 18:12:32 +0200
+
+bloonix-dbi (0.1-1) unstable; urgency=low
+
+  * Initial release.
+
+ -- Jonny Schulz <js@bloonix.de>  Mon, 25 Aug 2014 15:00:00 +0200
+
