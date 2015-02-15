@@ -189,6 +189,10 @@ is returned.
 
 =head2 C<update>
 
+The method C<update> expects a condition to update table rows. If you
+want to update all rows of a table then use the method C<do> of
+C<Bloonix::DBI>.
+
     update table set foo = 10, bar = 20 where foo = 1 and bar = 2
 
     $schema->update(
