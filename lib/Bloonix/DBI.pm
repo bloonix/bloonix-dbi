@@ -345,7 +345,7 @@ use Params::Validate qw//;
 use Bloonix::SQL::Creator;
 
 use base qw/Bloonix::Accessor/;
-__PACKAGE__->mk_accessors(qw/dbh sth log sql is_dup/);
+__PACKAGE__->mk_accessors(qw/dbh sth log sql is_dup pid/);
 
 our $VERSION = "0.4";
 
@@ -354,6 +354,7 @@ sub new {
     my $opts  = $class->validate(@_);
     my $self  = bless $opts, $class;
 
+    $self->pid($$);
     $self->log(Log::Handler->new);
     $self->log->set_default_param(die_on_errors => 0);
 
@@ -391,6 +392,11 @@ sub connect {
 
 sub reconnect {
     my $self = shift;
+
+    if ($self->pid != $$) {
+        $self->disconnect;
+        $self->pid($$);
+    }
 
     if ($self->dbh) {
         my $ping = ();
