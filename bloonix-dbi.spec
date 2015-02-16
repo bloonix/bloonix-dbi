@@ -1,6 +1,6 @@
 Summary: Bloonix DBI
 Name: bloonix-dbi
-Version: 0.3
+Version: 0.4
 Release: 1%{dist}
 License: Commercial
 Group: Utilities/System
@@ -48,6 +48,8 @@ rm -rf %{buildroot}
 %{_mandir}/man3/*
 
 %changelog
+* Mon Feb 16 2015 Jonny Schulz <js@bloonix.de> - 0.4-1
+- Fixed sth_cache_enabled errors.
 * Mon Nov 03 2014 Jonny Schulz <js@bloonix.de> - 0.3-1
 - sth_cache_enabled is turned off by default now.
 - Updated the license information.
