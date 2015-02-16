@@ -347,7 +347,7 @@ use Bloonix::SQL::Creator;
 use base qw/Bloonix::Accessor/;
 __PACKAGE__->mk_accessors(qw/dbh sth log sql is_dup/);
 
-our $VERSION = "0.3";
+our $VERSION = "0.4";
 
 sub new {
     my $class = shift;
