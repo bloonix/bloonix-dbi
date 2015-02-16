@@ -916,7 +916,7 @@ sub validate {
             default => ".",
         },
         sth_cache_enabled => {
-            type => Params::Validate::HASHREF,
+            type => Params::Validate::SCALAR,
             regex => qr/^(?:yes|no|0|1)\z/,
             default => 0,
         },
