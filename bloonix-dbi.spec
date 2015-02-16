@@ -1,6 +1,6 @@
 Summary: Bloonix DBI
 Name: bloonix-dbi
-Version: 0.4
+Version: 0.5
 Release: 1%{dist}
 License: Commercial
 Group: Utilities/System
@@ -48,6 +48,8 @@ rm -rf %{buildroot}
 %{_mandir}/man3/*
 
 %changelog
+* Mon Feb 16 2015 Jonny Schulz <js@bloonix.de> - 0.5-1
+- Fixed error "prepared statement already exist".
 * Mon Feb 16 2015 Jonny Schulz <js@bloonix.de> - 0.4-1
 - Fixed sth_cache_enabled errors.
 * Mon Nov 03 2014 Jonny Schulz <js@bloonix.de> - 0.3-1
