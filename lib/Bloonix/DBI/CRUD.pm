@@ -410,7 +410,7 @@ sub __create {
 
     $self->{last_insert_row} = undef;
 
-    if ($opts{gen_id}) {
+    if ($opts{gen_id} && $self->dbi->driver eq "Pg") {
         $data->{$unique_id_column} //= $self->sequence;
     }
 
@@ -427,7 +427,11 @@ sub __create {
         or return undef;
 
     if ($opts{gen_id}) {
-        $self->{last_insert_row} = $self->get($data->{$unique_id_column});
+        if ($self->dbi->driver eq "Pg") {
+            $self->{last_insert_row} = $self->get($data->{$unique_id_column});
+        } elsif ($self->dbi->driver eq "mysql") {
+            $self->{last_insert_row} = $self->get($self->dbi->dbh->{mysql_insertid});
+        }
     } else {
         # HOAH! Careful! If the table has a auto-increment column
         # then this column will not be returned! If the table has

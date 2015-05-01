@@ -66,9 +66,9 @@ __PACKAGE__->mk_accessors(qw/dbi log sql/);
 sub new {
     my ($class, $c, $config) = @_ == 2 ? ($_[0], "", $_[1]) : @_;
 
-    my $dbi  = Bloonix::DBI->new($config);
-    my $log  = $dbi->log;
-    my $sql  = $dbi->sql;
+    my $dbi = Bloonix::DBI->new($config);
+    my $log = $dbi->log;
+    my $sql = $dbi->sql;
     my $self = bless { dbi => $dbi, log => $log, sql => $sql, c => $c }, $class;
 
     my %classes = $self->load;

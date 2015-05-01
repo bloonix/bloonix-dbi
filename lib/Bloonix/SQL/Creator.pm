@@ -401,7 +401,7 @@ Output (Pg):
         "host"."hostname" like ?
         and "host"."ipaddr" like ?
         or "host"."status" like ?
-        and "host"."hostname"||' '||"host"."ipaddr"||' '||"host"."description" like ?
+        and lower(concat("host"."hostname",' ',"host"."ipaddr",' ',"host"."description")) like ?
     )
 
 =over 4
@@ -467,7 +467,7 @@ With the option C<concat> you set the column in order to search.
 
 Then the following sql statement will be created:
 
-    where host.hostname || ' ' || host.ipaddr || ' ' || host.description like '%testserver%'
+    where lower(concat(host.hostname, ' ', host.ipaddr, ' ', host.description)) like '%testserver%'
 
 On this way you can simulate a fulltext search.
 
@@ -482,7 +482,7 @@ By default a whiteapces is used. The following example
 
 would create
 
-    where host.hostname || ',' || host.ipaddr || ',' || host.description like '%testserver%'
+    where lower(concat(host.hostname, ',', host.ipaddr, ',', host.description)) like '%testserver%'
 
 Please note: single quotes C<'> are not allowed as delimiter and will be removed
 
@@ -982,7 +982,7 @@ sub _extended_condition {
                 foreach my $c (@{$col->{concat}}) {
                     push @quoted, $self->quote($c);
                 }
-                $col = "lower(".CORE::join("||'$del'||", @quoted).")";
+                $col = "lower(concat(".CORE::join(",'$del',", @quoted)."))";
             }
         } else {
             $col = $self->quote(

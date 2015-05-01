@@ -345,9 +345,9 @@ use Params::Validate qw//;
 use Bloonix::SQL::Creator;
 
 use base qw/Bloonix::Accessor/;
-__PACKAGE__->mk_accessors(qw/dbh sth log sql is_dup pid/);
+__PACKAGE__->mk_accessors(qw/dbh sth log sql is_dup pid driver database/);
 
-our $VERSION = "0.5";
+our $VERSION = "0.6";
 
 sub new {
     my $class = shift;
@@ -855,10 +855,10 @@ sub query {
     return ($count, $data);
 }
 
-sub driver {
+sub last_insert_id {
     my $self = shift;
 
-    return $self->{driver};
+    return $self->dbh->last_insert_id(@_);
 }
 
 sub errstr {
