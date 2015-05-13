@@ -1,4 +1,4 @@
-bloonix-dbi (0.6) released at 2015-XX-XX
+bloonix-dbi (0.6) released at 2015-05-07
 
     * Added accessors driver and database.
     * Improved string concatination and replaced || with concat().

@@ -1,6 +1,6 @@
 Summary: Bloonix DBI
 Name: bloonix-dbi
-Version: 0.5
+Version: 0.6
 Release: 1%{dist}
 License: Commercial
 Group: Utilities/System
@@ -16,6 +16,7 @@ Source0: http://download.bloonix.de/sources/%{name}-%{version}.tar.gz
 Requires: bloonix-core
 Requires: perl(DBI)
 Requires: perl(DBD::Pg)
+Requires: perl(DBD::mysql)
 Requires: perl(Log::Handler)
 Requires: perl(Params::Validate)
 AutoReqProv: no
@@ -48,6 +49,9 @@ rm -rf %{buildroot}
 %{_mandir}/man3/*
 
 %changelog
+* Thu May 07 2015 Jonny Schulz <js@bloonix.de> - 0.6-1
+- Added accessors driver and database.
+- Improved string concatination and replaced || with concat().
 * Mon Feb 16 2015 Jonny Schulz <js@bloonix.de> - 0.5-1
 - Fixed error "prepared statement already exist".
 * Mon Feb 16 2015 Jonny Schulz <js@bloonix.de> - 0.4-1
