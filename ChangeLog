@@ -1,3 +1,7 @@
+bloonix-dbi (0.7) released at 2015-05-15
+
+    * Fixed/added transactions support for mysql.
+
 bloonix-dbi (0.6) released at 2015-05-07
 
     * Added accessors driver and database.

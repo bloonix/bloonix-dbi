@@ -459,55 +459,71 @@ sub create_and_get {
 sub create_unique {
     my $self = shift;
     my $data = @_ > 1 ? {@_} : shift;
-    my $ret;
+    my ($ret, $old);
 
-    my $old = $self->dbi->autocommit(0);
-    $self->dbi->begin;
-    $self->dbi->lock($self->{table});
+    eval {
+        $old = $self->dbi->autocommit(0);
+        $self->dbi->begin;
+        $self->dbi->lock($self->{table});
 
-    my $dups = $self->check_unique(data => $data);
+        my $dups = $self->check_unique(data => $data);
 
-    if ($dups) {
-        $ret = Bloonix::DBI::UniqueStatus->new(status => "dup", data => $dups);
-    } elsif (!$self->has_unique_id && $self->create($data)) {
-        $ret = Bloonix::DBI::UniqueStatus->new(status => "ok", data => $data);
-    } elsif ($self->has_unique_id && $self->create_and_get($data)) {
-        $ret = Bloonix::DBI::UniqueStatus->new(status => "ok", data => $self->{last_insert_row});
-    } else {
-        $ret = Bloonix::DBI::UniqueStatus->new(status => "err");
+        if ($dups) {
+            $ret = Bloonix::DBI::UniqueStatus->new(status => "dup", data => $dups);
+        } elsif (!$self->has_unique_id && $self->create($data)) {
+            $ret = Bloonix::DBI::UniqueStatus->new(status => "ok", data => $data);
+        } elsif ($self->has_unique_id && $self->create_and_get($data)) {
+            $ret = Bloonix::DBI::UniqueStatus->new(status => "ok", data => $self->{last_insert_row});
+        } else {
+            $ret = Bloonix::DBI::UniqueStatus->new(status => "err");
+        }
+
+        $self->dbi->unlock($self->{table});
+        $self->dbi->commit;
+        $self->dbi->autocommit($old);
+    };
+
+    if ($@) {
+        eval { $self->dbi->unlock($self->{table}) };
+        eval { $self->dbi->rollback };
+        eval { $self->dbi->autocommit($old) };
     }
-
-    $self->dbi->unlock($self->{table});
-    $self->dbi->commit;
-    $self->dbi->autocommit($old);
 
     return $ret;
 }
 
 sub update_unique {
     my ($self, $id, $data) = @_;
-    my $ret;
+    my ($ret, $old);
 
-    my $old = $self->dbi->autocommit(0);
-    $self->dbi->begin;
-    $self->dbi->lock($self->{table});
+    eval {
+        $old = $self->dbi->autocommit(0);
+        $self->dbi->begin;
+        $self->dbi->lock($self->{table});
 
-    my $dups = $self->check_unique(
-        data => $data,
-        skip => $id
-    );
+        my $dups = $self->check_unique(
+            data => $data,
+            skip => $id
+        );
 
-    if ($dups) {
-        $ret = Bloonix::DBI::UniqueStatus->new(status => "dup", data => $dups);
-    } elsif ($self->update($id => $data)) {
-        $ret = Bloonix::DBI::UniqueStatus->new(status => "ok", data => $self->get($id));
-    } else {
-        $ret = Bloonix::DBI::UniqueStatus->new(status => "err");
+        if ($dups) {
+            $ret = Bloonix::DBI::UniqueStatus->new(status => "dup", data => $dups);
+        } elsif ($self->update($id => $data)) {
+            $ret = Bloonix::DBI::UniqueStatus->new(status => "ok", data => $self->get($id));
+        } else {
+            $ret = Bloonix::DBI::UniqueStatus->new(status => "err");
+        }
+
+        $self->dbi->unlock($self->{table});
+        $self->dbi->commit;
+        $self->dbi->autocommit($old);
+    };
+
+    if ($@) {
+        eval { $self->dbi->unlock($self->{table}) };
+        eval { $self->dbi->rollback };
+        eval { $self->dbi->autocommit($old) };
     }
-
-    $self->dbi->unlock($self->{table});
-    $self->dbi->commit;
-    $self->dbi->autocommit($old);
 
     return $ret;
 }

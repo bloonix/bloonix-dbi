@@ -602,6 +602,8 @@ sub begin {
 
     if ($self->{driver} eq "Pg" || $self->{driver} eq "Oracle") {
         return $self->do("begin");
+    } elsif ($self->{driver} eq "mysql") {
+        return $self->do("start transaction");
     }
 
     return 1;
