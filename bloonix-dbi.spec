@@ -1,6 +1,6 @@
 Summary: Bloonix DBI
 Name: bloonix-dbi
-Version: 0.6
+Version: 0.7
 Release: 1%{dist}
 License: Commercial
 Group: Utilities/System
@@ -49,6 +49,8 @@ rm -rf %{buildroot}
 %{_mandir}/man3/*
 
 %changelog
+* Thu May 14 2015 Jonny Schulz <js@bloonix.de> - 0.7-1
+- Fixed/added transactions support for mysql.
 * Thu May 07 2015 Jonny Schulz <js@bloonix.de> - 0.6-1
 - Added accessors driver and database.
 - Improved string concatination and replaced || with concat().
