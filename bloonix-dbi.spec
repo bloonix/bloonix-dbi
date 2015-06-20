@@ -1,6 +1,6 @@
 Summary: Bloonix DBI
 Name: bloonix-dbi
-Version: 0.8
+Version: 0.9
 Release: 1%{dist}
 License: Commercial
 Group: Utilities/System
@@ -49,6 +49,8 @@ rm -rf %{buildroot}
 %{_mandir}/man3/*
 
 %changelog
+* Sat Jun 20 2015 Jonny Schulz <js@bloonix.de> - 0.9-1
+- Fixed counting distinct rows.
 * Sat Jun 20 2015 Jonny Schulz <js@bloonix.de> - 0.8-1
 - Fixed concatenation of columns, specially for MySQL.
 * Thu May 14 2015 Jonny Schulz <js@bloonix.de> - 0.7-1

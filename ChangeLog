@@ -1,3 +1,7 @@
+bloonix-dbi (0.9) released at 2015-06-20
+
+    * Fixed counting distinct rows.
+
 bloonix-dbi (0.8) released at 2015-06-20
 
     * Fixed concatenation of columns, specially for MySQL.
