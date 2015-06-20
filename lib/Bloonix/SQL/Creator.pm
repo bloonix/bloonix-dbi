@@ -605,7 +605,8 @@ sub select {
         if (exists $select->{distinct}) {
             if (ref $select->{count} eq "ARRAY") {
                 my @c = map { $self->quote($_) } @{$select->{count}};
-                push @stmt, "count(distinct ".join(" || ' ' || ", @c).") AS count";
+                #push @stmt, "count(distinct ".join(" || ' ' || ", @c).") AS count";
+                push @stmt, "count(concat_ws(' ',".CORE::join(",", @c)."))";
             } else {
                 push @stmt, "count(distinct ".$self->quote($select->{count}).") AS count";
             }

@@ -347,7 +347,7 @@ use Bloonix::SQL::Creator;
 use base qw/Bloonix::Accessor/;
 __PACKAGE__->mk_accessors(qw/dbh sth log sql is_dup pid driver database/);
 
-our $VERSION = "0.7";
+our $VERSION = "0.8";
 
 sub new {
     my $class = shift;
