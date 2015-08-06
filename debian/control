@@ -9,6 +9,6 @@ Homepage: http://www.bloonix.de/
 
 Package: bloonix-dbi
 Architecture: all
-Depends: ${perl:Depends}, bloonix-core, libdbi-perl, libdbd-pg-perl, libdbd-mysql-perl, liblog-handler-perl, libparams-validate-perl
+Depends: ${perl:Depends}, bloonix-core (>= 0.23), libdbi-perl, libdbd-pg-perl, libdbd-mysql-perl, liblog-handler-perl, libparams-validate-perl
 Description: Bloonix database interface.
  The Bloonix database interface.
