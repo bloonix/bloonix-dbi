@@ -968,6 +968,22 @@ sub _extended_condition {
             $brace = 0;
         }
 
+        if ($clause->{math}) {
+            my $math = $clause->{math};
+            $math =~ s/([a-zA-Z_0-9]*[a-zA-Z]+[a-zA-Z_0-9]*(?:\.[a-zA-Z_0-9]*[a-zA-Z]+[a-zA-Z_0-9]*){0,1})/$self->quote($1)/eg;
+            push @stmt, $math;
+            if (defined $clause->{value}) {
+                if (!defined $clause->{op}) {
+                    push @stmt, "=";
+                } else {
+                    push @stmt, $clause->{op};
+                }
+                push @stmt, "?";
+                push @bind, $clause->{value};
+            }
+            next;
+        }
+
         my $col;
         my $val = $clause->{value};
         my $lc = $clause->{lower};

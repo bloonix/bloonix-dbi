@@ -331,7 +331,7 @@ Jonny Schulz <support(at)bloonix.de>.
 
 =head1 COPYRIGHT
 
-Copyright (C) 2009-2014 by Jonny Schulz. All rights reserved.
+Copyright (C) 2014 by Jonny Schulz. All rights reserved.
 
 =cut
 
@@ -396,6 +396,11 @@ sub reconnect {
     if ($self->pid != $$) {
         $self->disconnect;
         $self->pid($$);
+    }
+
+    # Maybe an old transaction is active? Fix it!
+    if ($self->dbh && $self->autocommit != $self->{db_params}->{AutoCommit}) {
+        $self->disconnect;
     }
 
     if ($self->dbh) {
@@ -610,19 +615,22 @@ sub begin {
 }
 
 sub lock {
-    my ($self, $table) = @_;
-    $table = $self->sql->quote($table);
+    my ($self, @tables) = @_;
+
+    foreach my $t (@tables) {
+        $t = $self->sql->quote($t);
+    }
 
     if ($self->{driver} eq "Pg") {
-        return $self->do("lock table $table in exclusive mode");
+        return $self->do("lock table ". join(",", @tables) ." in exclusive mode");
     }
 
     if ($self->{driver} eq "mysql") {
-        return $self->do("lock table $table write");
+        return $self->do("lock table ". join(", ", map { "$_ write" } @tables));
     }
 
     if ($self->{driver} eq "oracle") {
-        return $self->do("lock table $table exclusive");
+        return $self->do("lock table ". join(",", @tables) ." in exclusive mode");
     }
 
     return 1;
@@ -947,14 +955,12 @@ sub validate {
     if ($options{driver} eq "Pg") {
         $options{quote_char} = '"';
         $options{port} //= 5432;
-        #$options{db_params}{mysql_enable_utf8} = 1;
     } elsif ($options{driver} eq "Oracle") {
         $options{quote_char} = "'";
         $options{port} //= 1521;
     } elsif ($options{driver} eq "mysql") {
         $options{quote_char} = '`';
         $options{port} //= 3306;
-        #$options{db_params}{pg_enable_utf8} = 1;
     }
 
     # build the connect string
