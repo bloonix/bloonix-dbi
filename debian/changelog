@@ -1,3 +1,10 @@
+bloonix-dbi (0.10-1) unstable; urgency=low
+
+    * Now it's possible to lock multiple tables with one
+      call of lock().
+
+ -- Jonny Schulz <js@bloonix.de>  Thu, 06 Aug 2015 21:46:27 +0200
+
 bloonix-dbi (0.9-1) unstable; urgency=low
 
     * Fixed counting distinct rows.
