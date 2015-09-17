@@ -1176,7 +1176,10 @@ sub search {
                 }
             }
 
-            $cond{value} = "%". lc($value) ."%";
+            $cond{value} = $value =~ s/^\^//
+                ? "%". lc($value) ."%"
+                : lc($value) ."%";
+
             $cond{lower} = 1;
 
             if (ref $maps->{$key} eq "HASH") {

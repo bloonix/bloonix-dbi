@@ -1,3 +1,8 @@
+bloonix-dbi (0.11) released at 2015-09-18
+
+    * If a search string begins with ^ then no pre % is add to
+      like statements.
+
 bloonix-dbi (0.10) released at 2015-08-06
 
     * Now it's possible to lock multiple tables with one
