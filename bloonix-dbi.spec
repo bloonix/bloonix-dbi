@@ -1,6 +1,6 @@
 Summary: Bloonix DBI
 Name: bloonix-dbi
-Version: 0.10
+Version: 0.11
 Release: 1%{dist}
 License: Commercial
 Group: Utilities/System
@@ -49,6 +49,9 @@ rm -rf %{buildroot}
 %{_mandir}/man3/*
 
 %changelog
+* Fri Sep 18 2015 Jonny Schulz <js@bloonix.de> - 0.11-1
+- If a search string begins with ^ then no pre % is add to
+  like statements.
 * Thu Aug 06 2015 Jonny Schulz <js@bloonix.de> - 0.10-1
 - Now it's possible to lock multiple tables with one
   call of lock().

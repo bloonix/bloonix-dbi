@@ -1,3 +1,10 @@
+bloonix-dbi (0.11-1) unstable; urgency=low
+
+    * If a search string begins with ^ then no pre % is add to
+      like statements.
+
+ -- Jonny Schulz <js@bloonix.de>  Fri, 18 Sep 2015 01:43:49 +0200
+
 bloonix-dbi (0.10-1) unstable; urgency=low
 
     * Now it's possible to lock multiple tables with one

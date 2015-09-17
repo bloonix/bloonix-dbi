@@ -1176,11 +1176,15 @@ sub search {
                 }
             }
 
-            $cond{value} = $value =~ s/^\^//
-                ? "%". lc($value) ."%"
-                : lc($value) ."%";
-
-            $cond{lower} = 1;
+            if ($value =~ s/^\^//) {
+                $cond{value} = $value ."%";
+                $cond{lower} = 1;
+            } elsif ($value =~ s/^!//) {
+                $cond{value} = $value ."%";
+            } else {
+                $cond{value} = "%". $value ."%";
+                $cond{lower} = 1;
+            }
 
             if (ref $maps->{$key} eq "HASH") {
                 my $tmap = $maps->{$key};
