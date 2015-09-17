@@ -404,6 +404,12 @@ Output (Pg):
         and lower(concat_ws(' ', "host"."hostname","host"."ipaddr","host"."description")) like ?
     )
 
+Further examples:
+
+    col:Foo     creates: where lower(col) like lower('%Foo%')
+    col:^Foo    creates: where lower(col) like lower('Foo%')
+    col:!Foo    creates: where col like 'Foo%'
+
 =over 4
 
 =item query
