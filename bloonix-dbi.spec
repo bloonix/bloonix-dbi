@@ -1,6 +1,6 @@
 Summary: Bloonix DBI
 Name: bloonix-dbi
-Version: 0.11
+Version: 0.12
 Release: 1%{dist}
 License: Commercial
 Group: Utilities/System
@@ -49,6 +49,9 @@ rm -rf %{buildroot}
 %{_mandir}/man3/*
 
 %changelog
+* Mon Nov 16 2015 Jonny Schulz <js@bloonix.de> - 0.12-1
+- Implement sum() in Bloonix::SQL::Creator.
+- Bloonix::Validator is renamed to Bloonix::Validate.
 * Fri Sep 18 2015 Jonny Schulz <js@bloonix.de> - 0.11-1
 - If a search string begins with ^ then no pre % is add to
   like statements.

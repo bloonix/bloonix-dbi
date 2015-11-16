@@ -1,3 +1,10 @@
+bloonix-dbi (0.12-1) unstable; urgency=low
+
+    * Implement sum() in Bloonix::SQL::Creator.
+    * Bloonix::Validator is renamed to Bloonix::Validate.
+
+ -- Jonny Schulz <js@bloonix.de>  Mon, 16 Nov 2015 13:19:15 +0100
+
 bloonix-dbi (0.11-1) unstable; urgency=low
 
     * If a search string begins with ^ then no pre % is add to
