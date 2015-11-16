@@ -34,7 +34,7 @@ Accessor to the base class.
 
 =head2 C<validator>
 
-Accessor to C<Bloonix::Validator>.
+Accessor to C<Bloonix::Validate>.
 
 =head2 C<c>
 
@@ -74,7 +74,7 @@ package Bloonix::DBI::Base;
 
 use strict;
 use warnings;
-use Bloonix::Validator;
+use Bloonix::Validate;
 
 sub new {
     my ($class, %opts) = @_;
@@ -122,7 +122,7 @@ sub validator {
     my $self = shift;
 
     if (!$self->{validator}) {
-        $self->{validator} = Bloonix::Validator->new();
+        $self->{validator} = Bloonix::Validate->new();
         $self->validator->schema($self->{schema});
     }
 

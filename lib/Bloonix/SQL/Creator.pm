@@ -571,7 +571,7 @@ sub new {
         table       column      distinct    count
         join        condition   order       order_desc
         order_asc   group_by    min         max
-        limit       offset
+        limit       offset      sum
     )};
 
     $opts->{log} = Log::Handler->get_logger("bloonix");
@@ -627,6 +627,10 @@ sub select {
 
     if (exists $select->{max}) {
         push @stmt, "max(".$self->quote($select->{max}).") AS max";
+    }
+
+    if (exists $select->{sum}) {
+        push @stmt, "sum(".$self->quote($select->{sum}).") AS sum";
     }
 
     # select( table => [ tablename => columns ] )

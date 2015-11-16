@@ -184,7 +184,7 @@ It's possible to validate data before inserts or updates.
     my ($result, $success) = $schema->validated(create => \%data);
     my ($result, $success) = $schema->validated(update => \%data);
 
-If the validation fails then only the result of C<Bloonix::Validator>
+If the validation fails then only the result of C<Bloonix::Validate>
 is returned.
 
 =head2 C<update>
@@ -329,7 +329,7 @@ package Bloonix::DBI::CRUD;
 
 use strict;
 use warnings;
-use Bloonix::Validator;
+use Bloonix::Validate;
 use Bloonix::DBI::UniqueStatus;
 
 sub get {

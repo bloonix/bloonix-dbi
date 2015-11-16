@@ -347,7 +347,7 @@ use Bloonix::SQL::Creator;
 use base qw/Bloonix::Accessor/;
 __PACKAGE__->mk_accessors(qw/dbh sth log sql is_dup pid driver database/);
 
-our $VERSION = "0.11";
+our $VERSION = "0.12";
 
 sub new {
     my $class = shift;
@@ -470,6 +470,20 @@ sub max {
         or return undef;
 
     return $row ? $row->{max} : undef;
+}
+
+sub sum {
+    my ($self, $stmt, @bind) = @_;
+
+    my $sth = $self->execute($stmt, @bind)
+        or return undef;
+
+    my $row = $sth->fetchrow_hashref;
+
+    $sth->finish
+        or return undef;
+
+    return $row ? $row->{sum} : 0;
 }
 
 sub sequence {
