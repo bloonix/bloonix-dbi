@@ -1,3 +1,9 @@
+bloonix-dbi (0.13-1) unstable; urgency=low
+
+    * Improved transaction handling.
+
+ -- Jonny Schulz <js@bloonix.de>  Sat, 19 Mar 2016 21:59:31 +0100
+
 bloonix-dbi (0.12-1) unstable; urgency=low
 
     * Implement sum() in Bloonix::SQL::Creator.

@@ -1,6 +1,6 @@
 Summary: Bloonix DBI
 Name: bloonix-dbi
-Version: 0.12
+Version: 0.13
 Release: 1%{dist}
 License: Commercial
 Group: Utilities/System
@@ -49,6 +49,8 @@ rm -rf %{buildroot}
 %{_mandir}/man3/*
 
 %changelog
+* Sat Mar 19 2016 Jonny Schulz <js@bloonix.de> - 0.13-1
+- Improved transaction handling.
 * Mon Nov 16 2015 Jonny Schulz <js@bloonix.de> - 0.12-1
 - Implement sum() in Bloonix::SQL::Creator.
 - Bloonix::Validator is renamed to Bloonix::Validate.
