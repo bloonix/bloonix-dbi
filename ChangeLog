@@ -1,3 +1,7 @@
+bloonix-dbi (0.13) released at 2016-02-27
+
+    * Improved transaction handling.
+
 bloonix-dbi (0.12) released at 2015-11-15
 
     * Implement sum() in Bloonix::SQL::Creator.

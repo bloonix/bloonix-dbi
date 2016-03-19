@@ -459,10 +459,9 @@ sub create_and_get {
 sub create_unique {
     my $self = shift;
     my $data = @_ > 1 ? {@_} : shift;
-    my ($ret, $old);
+    my $ret;
 
     eval {
-        $old = $self->dbi->autocommit(0);
         $self->dbi->begin;
         $self->dbi->lock($self->{table});
 
@@ -478,15 +477,13 @@ sub create_unique {
             $ret = Bloonix::DBI::UniqueStatus->new(status => "err");
         }
 
-        $self->dbi->unlock($self->{table});
+        $self->dbi->unlock;
         $self->dbi->commit;
-        $self->dbi->autocommit($old);
     };
 
     if ($@) {
-        eval { $self->dbi->unlock($self->{table}) };
+        eval { $self->dbi->unlock };
         eval { $self->dbi->rollback };
-        eval { $self->dbi->autocommit($old) };
     }
 
     return $ret;
@@ -494,10 +491,9 @@ sub create_unique {
 
 sub update_unique {
     my ($self, $id, $data) = @_;
-    my ($ret, $old);
+    my $ret;
 
     eval {
-        $old = $self->dbi->autocommit(0);
         $self->dbi->begin;
         $self->dbi->lock($self->{table});
 
@@ -514,15 +510,13 @@ sub update_unique {
             $ret = Bloonix::DBI::UniqueStatus->new(status => "err");
         }
 
-        $self->dbi->unlock($self->{table});
+        $self->dbi->unlock;
         $self->dbi->commit;
-        $self->dbi->autocommit($old);
     };
 
     if ($@) {
-        eval { $self->dbi->unlock($self->{table}) };
+        eval { $self->dbi->unlock };
         eval { $self->dbi->rollback };
-        eval { $self->dbi->autocommit($old) };
     }
 
     return $ret;

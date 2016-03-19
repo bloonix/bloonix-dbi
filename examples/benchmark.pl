@@ -10,34 +10,73 @@ sub create {
     my ($stmt, @bind) = $sql->select(
         distinct => 1,
         table => [
-            event   => "*",
-            service => [qw/service_name host_id/],
-            host    => "hostname",
+            service => "*",
+            service_parameter => "*",
+            host => [
+                "hostname", "interval", "ipaddr",
+                "notification AS host_notification",
+                "active AS host_active"
+            ],
+            company => [ "id AS company_id", "company" ],
+            status_priority => "priority",
+            plugin => "plugin"
         ],
         join => [
-            inner => [ "service", "event.service_id", "service.id" ],
-            inner => [ "host", "service.host_id", "host.id" ],
-            inner => [ "host_group", "host.id", "host_group.host_id" ],
-            inner => [ "user_group", "host_group.group_id", "user_group.group_id" ],
+            inner => {
+                table => "service_parameter",
+                left => "service.service_parameter_id",
+                right => "service_parameter.ref_id"
+            },
+            inner => {
+                table => "host",
+                left => "service.host_id",
+                right => "host.id"
+            },
+            inner => {
+                table => "company",
+                left => "host.company_id",
+                right => "company.id"
+            },
+            inner => {
+                table => "status_priority",
+                left => "service.status",
+                right => "status_priority.status"
+            },
+            inner => {
+                table => "host_group",
+                left => "host.id",
+                right => "host_group.host_id"
+            },
+            inner => {
+                table => "user_group",
+                left => "host_group.group_id",
+                right => "user_group.group_id"
+            },
+            inner => {
+                table => "plugin",
+                left => "service_parameter.plugin_id",
+                right => "plugin.id"
+            }
         ],
         condition => [
             where => {
-                table  => "event",
-                column => "time",
-                op     => ">",
-                value  => time,
-            },
-            and => {
                 table  => "user_group",
                 column => "user_id",
-                op     => "=",
-                value  => 1,
+                value  => 1
+            },
+            and => {
+                table  => "host",
+                column => "id",
+                value  => [2,3,4]
             },
         ],
-        order_desc => "time",
-        limit => 30,
+        order => [
+            desc => ["status_priority.priority", "service.status_nok_since"],
+            asc => ["host.hostname", "service_parameter.service_name"]
+        ],
+        limit => 10,
+        offset => 0
     );
 }
 
-Benchmark::timethis(10000, \&create);
-
+Benchmark::timethis(100000, \&create);

@@ -24,8 +24,6 @@ Bloonix::DBI - The database interface.
 
     # Transaction example
 
-    my $old = $dbi->autocommit(0);
-
     eval {
         $dbi->begin;
         $dbi->lock($table);
@@ -33,17 +31,14 @@ Bloonix::DBI - The database interface.
         $dbi->do("update into $table ...");
         $dbi->do("delete from $table ...");
         $dbi->commit;
-        $dbi->unlock($table);
+        $dbi->unlock;
     };
 
     if ($@) {
         my $error = $@;
         eval { $dbi->rollback }; # might die
-        $dbi->autocommit($old);
         die $error;
     }
-
-    $dbi->autocommit($old);
 
 =head1 DESCRIPTION
 
@@ -347,7 +342,7 @@ use Bloonix::SQL::Creator;
 use base qw/Bloonix::Accessor/;
 __PACKAGE__->mk_accessors(qw/dbh sth log sql is_dup pid driver database/);
 
-our $VERSION = "0.12";
+our $VERSION = "0.13";
 
 sub new {
     my $class = shift;
@@ -619,13 +614,7 @@ sub doeval {
 sub begin {
     my $self = shift;
 
-    if ($self->{driver} eq "Pg" || $self->{driver} eq "Oracle") {
-        return $self->do("begin");
-    } elsif ($self->{driver} eq "mysql") {
-        return $self->do("start transaction");
-    }
-
-    return 1;
+    return $self->dbh->begin_work;
 }
 
 sub lock {
@@ -691,14 +680,9 @@ sub autocommit {
 sub begin_transaction {
     my $self = shift;
 
-    eval {
-        $self->{__old} = $self->autocommit;
-        $self->autocommit(0);
-        $self->begin;
-    };
+    eval { $self->begin };
 
     if ($@) {
-        eval { $self->autocommit($self->{__old}) };
         $self->log->error($@);
         return undef;
     }
@@ -712,12 +696,10 @@ sub rollback_transaction {
     eval { $self->rollback };
 
     if ($@) {
-        eval { $self->autocommit($self->{__old}) };
         $self->log->error($@);
         return undef;
     }
 
-    eval { $self->autocommit($self->{__old}) };
     return 1;
 }
 
@@ -732,17 +714,12 @@ sub end_transaction {
         return undef;
     }
 
-    eval { $self->autocommit($self->{__old}) };
     return 1;
 }
 
 sub transaction {
     my ($self, $callback, @args) = @_;
-    my $old = $self->autocommit;
     my $ret = undef;
-
-    # Set AutoCommit to off!
-    $self->autocommit(0);
 
     # begin and commit must be executed in the callback,
     # because it's possible that there are more then
@@ -753,7 +730,6 @@ sub transaction {
         eval { $self->rollback };
     }
 
-    $self->autocommit($old);
     return $ret;
 }
 
