@@ -1,3 +1,10 @@
+bloonix-dbi (0.15-1) unstable; urgency=low
+
+    * Bloonix::SQL::Creator: it's now possible to use unknown functions
+      like date_format().
+
+ -- Jonny Schulz <js@bloonix.de>  Tue, 29 Mar 2016 05:31:14 +0200
+
 bloonix-dbi (0.14-1) unstable; urgency=low
 
     * Extra release because the gpg key of bloonix is updated.
