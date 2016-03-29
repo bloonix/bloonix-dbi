@@ -1099,6 +1099,9 @@ sub quote {
                 push @{$self->{bind}}, $str->{pattern};
             } elsif ($str->{function} =~ /^(min|max|sum|avg|count)\z/) {
                 $temp = "$1(" . $self->quote($str->{column}) . ")";
+            } else {
+                $temp = "$str->{function}(" . $self->quote($str->{column}) . ", ?)";
+                push @{$self->{bind}}, $str->{pattern};
             }
 
             if ($str->{alias}) {
