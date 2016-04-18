@@ -1,6 +1,6 @@
 Summary: Bloonix DBI
 Name: bloonix-dbi
-Version: 0.15
+Version: 0.16
 Release: 1%{dist}
 License: Commercial
 Group: Utilities/System
@@ -49,6 +49,8 @@ rm -rf %{buildroot}
 %{_mandir}/man3/*
 
 %changelog
+* Tue Apr 19 2016 Jonny Schulz <js@bloonix.de> - 0.16-1
+- Fixed function sum(). 0 is now returned instead NULL.
 * Tue Mar 29 2016 Jonny Schulz <js@bloonix.de> - 0.15-1
 - Bloonix::SQL::Creator: it's now possible to use unknown functions
   like date_format().

@@ -1,3 +1,7 @@
+bloonix-dbi (0.16) released at 2016-04-18
+
+    * Fixed function sum(). 0 is now returned instead NULL.
+
 bloonix-dbi (0.15) released at 2016-03-29
 
     * Bloonix::SQL::Creator: it's now possible to use unknown functions

@@ -342,7 +342,7 @@ use Bloonix::SQL::Creator;
 use base qw/Bloonix::Accessor/;
 __PACKAGE__->mk_accessors(qw/dbh sth log sql is_dup pid driver database/);
 
-our $VERSION = "0.15";
+our $VERSION = "0.16";
 
 sub new {
     my $class = shift;
@@ -478,7 +478,11 @@ sub sum {
     $sth->finish
         or return undef;
 
-    return $row ? $row->{sum} : 0;
+    if ($row && $row->{sum}) {
+        return $row->{sum};
+    }
+
+    return 0;
 }
 
 sub sequence {

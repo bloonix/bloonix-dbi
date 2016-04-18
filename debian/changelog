@@ -1,3 +1,9 @@
+bloonix-dbi (0.16-1) unstable; urgency=low
+
+    * Fixed function sum(). 0 is now returned instead NULL.
+
+ -- Jonny Schulz <js@bloonix.de>  Tue, 19 Apr 2016 00:14:03 +0200
+
 bloonix-dbi (0.15-1) unstable; urgency=low
 
     * Bloonix::SQL::Creator: it's now possible to use unknown functions
